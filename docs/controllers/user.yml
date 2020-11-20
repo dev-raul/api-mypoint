@@ -1,0 +1,12 @@
+/user:
+  post:
+    description: Login the application
+    produces:
+      - application/json
+    parameters:
+      $ref: "#/definitions/User"
+    responses:
+      200:
+        description: User
+        schema:
+          $ref: "#/definitions/User"

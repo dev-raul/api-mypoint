@@ -1,0 +1,23 @@
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: uint
+      name:
+        type: string
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      cpf:
+        type: string;
+      resetToken:
+        type: string
+      expiryToken:
+        type: string
+      type:
+        type: number
+        enum: [1, 2, 3]

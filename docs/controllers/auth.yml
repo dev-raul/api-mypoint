@@ -1,0 +1,21 @@
+/session:
+  post:
+    description: Login the application
+    produces:
+      - application/json
+    parameters:
+      - name: email
+        description: E-mail to use for login
+        in: body
+        required: true
+        type: string
+      - name: password
+        description: Password to use for login
+        in: body
+        required: true
+        type: string
+    responses:
+      200:
+        description: Token
+        schema:
+          $ref: "#/definitions/Token"
