@@ -17,3 +17,8 @@
 const Route = use("Route");
 
 Route.post("user", "UserController.store");
+Route.post("session", "SessionController.store");
+
+Route.group(() => {
+  Route.put("user/:id", "UserController.update");
+}).middleware(["auth"]);
