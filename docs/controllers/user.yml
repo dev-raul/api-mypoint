@@ -1,12 +1,91 @@
 /user:
   post:
-    description: Login the application
+    description: User store
     produces:
       - application/json
     parameters:
-      $ref: "#/definitions/User"
+      - name: name
+        description: User first name
+        in: body
+        required: true
+        type: string
+      - name: surname
+        description: User surname
+        in: body
+        required: true
+        type: string
+      - name: email
+        description: User email
+        in: body
+        required: true
+        type: string
+      - name: password
+        description: User password
+        in: body
+        required: true
+        type: string
+      - name: cpf
+        description: User cpf
+        in: body
+        required: true
+        type: string
+      - name: type
+        description: User type
+        in: body
+        required: true
+        type: number
+        enum: [1, 2, 3]
     responses:
       200:
         description: User
+        content:
+          application/json:
         schema:
           $ref: "#/definitions/User"
+/user/{id}:
+  put:
+    description: User update
+    produces:
+      - application/json
+    parameters:
+      - name: name
+        description: User first name
+        in: body
+        required: false
+        type: string
+      - name: surname
+        description: User surname
+        in: body
+        required: false
+        type: string
+      - name: password
+        description: User password
+        in: body
+        required: false
+        type: string
+      - name: confirmPassword
+        description: Password to confirm password
+        in: body
+        required: false
+        type: string
+      - name: cpf
+        description: User cpf
+        in: body
+        required: false
+        type: string
+    responses:
+      200:
+        description: User
+        content:
+          application/json:
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+            message:
+              type: string
+            user:
+              $ref: "#/definitions/User"
+      401:
+        description: User not authorized for this operation

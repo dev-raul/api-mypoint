@@ -21,3 +21,9 @@ definitions:
       type:
         type: number
         enum: [1, 2, 3]
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time

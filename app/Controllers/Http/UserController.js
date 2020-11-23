@@ -30,7 +30,6 @@ class UserController {
       "email",
       "password",
       "cpf",
-      "password",
       "type",
     ]);
 
@@ -58,19 +57,12 @@ class UserController {
       return validation.messages();
     }
 
-    const data = request.only([
-      "name",
-      "surname",
-      "password",
-      "cpf",
-      "password",
-      "type",
-    ]);
+    const data = request.only(["name", "surname", "password", "cpf"]);
     const { confirmPassword } = request.only(["confirmPassword"]);
     if (auth.user.id !== parseInt(params.id)) {
       return response
         .status(401)
-        .json({ error: "Você não tem permissão para essa operação!" });
+        .json({ error: "Você não tem permissão para realizar essa operação!" });
     }
     const user = await auth.getUser();
     if (!user) {
