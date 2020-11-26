@@ -16,9 +16,15 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
+Route.get("/", ({ request, response }) => {
+  return { gretting: "Hello" };
+});
+
 Route.post("user", "UserController.store");
 Route.post("session", "SessionController.store");
 
 Route.group(() => {
   Route.put("user/:id", "UserController.update");
+
+  Route.resource("file", "FileController").except(["index"]);
 }).middleware(["auth"]);
