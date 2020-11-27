@@ -1,0 +1,50 @@
+/file:
+  post:
+    description: File store
+    produces:
+      - multipart/form-data
+    parameters:
+      - name: file
+        description: File
+        in: body
+        required: true
+        type: string
+    responses:
+      200:
+        description: User
+        content:
+          application/json:
+        schema:
+          $ref: "#/definitions/File"
+
+/file/{id}:
+  put:
+    description: File update
+    produces:
+      - multipart/form-data
+    parameters:
+      - name: file
+        description: File
+        in: body
+        required: true
+        type: string
+    responses:
+      200:
+        description: File
+        content:
+          application/json:
+        schema:
+          $ref: "#/definitions/File"
+      401:
+        description: User not authorized for this operation
+      404:
+        description: File not found
+  delete:
+    description: File delete
+    responses:
+      200:
+        description: File
+      401:
+        description: User not authorized for this operation
+      404:
+        description: File not found

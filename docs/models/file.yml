@@ -1,0 +1,18 @@
+definitions:
+  File:
+    type: object
+    properties:
+      id:
+        type: uint
+      user_id:
+        type: number
+      type:
+        type: string
+      username:
+        type: string
+      url:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string;
