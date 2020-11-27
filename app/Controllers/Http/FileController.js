@@ -11,6 +11,8 @@
 const Helpers = use("Helpers");
 const File = use("App/Models/File");
 
+const fs = require("fs");
+
 class FileController {
   /**
    * Create/save a new file.
@@ -20,7 +22,7 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {
+  async store({ request, response, auth }) {
     const file = request.file("file", {
       types: "image",
       size: "2mb",
@@ -38,7 +40,8 @@ class FileController {
     }
 
     const fileRes = await File.create({
-      name: clientName,
+      user_id: auth.user.id,
+      name,
       type,
       url: `file/${name}`,
     });
@@ -67,7 +70,49 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response, auth }) {
+    const file = request.file("file", {
+      types: "image",
+      size: "2mb",
+      extnames: ["png", "jpg"],
+    });
+
+    const files = await File.findBy({ name: params.id });
+
+    if (!files) {
+      return response
+        .status(404)
+        .json({ error: "O arquivo não foi encontrado!" });
+    }
+
+    if (auth.user.id !== files.user_id) {
+      return response.status(401).json({
+        error: "Você não tempo permissão para realizar essa operação!",
+      });
+    }
+
+    await fs.unlinkSync(Helpers.tmpPath(`uploads/${files.name}`));
+
+    const { clientName, type } = file;
+
+    const name = `${Date.now()}-${clientName}`;
+    await file.move(Helpers.tmpPath("uploads"), {
+      name,
+    });
+
+    if (!file.moved()) {
+      return file.error();
+    }
+
+    files.merge({
+      user_id: auth.user.id,
+      name,
+      type,
+      url: `file/${name}`,
+    });
+    await files.save();
+    return response.status(200).json({ file: files });
+  }
 
   /**
    * Delete a file with id.
@@ -77,7 +122,24 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response, auth }) {
+    const files = await File.findBy({ name: params.id });
+
+    if (!files) {
+      return response
+        .status(404)
+        .json({ error: "O arquivo não foi encontrado!" });
+    }
+
+    if (auth.user.id !== files.user_id) {
+      return response.status(401).json({
+        error: "Você não tempo permissão para realizar essa operação!",
+      });
+    }
+    await fs.unlinkSync(Helpers.tmpPath(`uploads/${files.name}`));
+    await files.delete();
+    return response.status(200).send();
+  }
 }
 
 module.exports = FileController;
