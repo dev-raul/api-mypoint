@@ -21,7 +21,7 @@ class UserController {
     const validation = await validateAll(request.all(), rules);
 
     if (validation.fails()) {
-      return validation.messages();
+      return response.status(400).send(validation.messages());
     }
 
     const data = request.only([
@@ -54,7 +54,7 @@ class UserController {
     const validation = await validateAll(request.all(), rules);
 
     if (validation.fails()) {
-      return validation.messages();
+      return response.status(400).send(validation.messages());
     }
 
     const data = request.only(["name", "surname", "password", "cpf"]);

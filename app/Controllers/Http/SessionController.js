@@ -14,7 +14,7 @@ class SessionController {
     const validation = await validateAll(request.all(), rules);
 
     if (validation.fails()) {
-      return validation.messages();
+      return response.status(400).send(validation.messages());
     }
 
     const { email, password } = request.only(["email", "password"]);
