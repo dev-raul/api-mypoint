@@ -12,7 +12,7 @@ class UserController {
     const rules = {
       name: "required",
       surname: "required",
-      email: "required|email|unique:users",
+      email: "required|email",
       cpf: "required|min:11|max:11",
       password: "required",
       type: [rule("required"), rule("integer"), rule("in", [1, 2, 3])],
