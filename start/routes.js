@@ -25,6 +25,7 @@ Route.post("session", "SessionController.store");
 
 Route.group(() => {
   Route.put("user/:id", "UserController.update");
+  Route.get("user/", "UserController.show");
 
   Route.resource("file", "FileController").except(["index"]);
 }).middleware(["auth"]);

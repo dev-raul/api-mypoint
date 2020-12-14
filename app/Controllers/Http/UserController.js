@@ -79,6 +79,10 @@ class UserController {
       user,
     });
   }
+  async show({ response, request, auth }) {
+    const user = await auth.getUser();
+    return user;
+  }
 }
 
 module.exports = UserController;

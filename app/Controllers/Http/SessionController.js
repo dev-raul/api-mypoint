@@ -18,9 +18,9 @@ class SessionController {
     }
 
     const { email, password } = request.only(["email", "password"]);
-
     const token = await auth.attempt(email, password);
-    return token;
+    let user = await User.findBy({ email });
+    return response.status(201).json({ ...token, user });
   }
 }
 
