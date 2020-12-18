@@ -28,4 +28,6 @@ Route.group(() => {
   Route.get("user/", "UserController.show");
 
   Route.resource("file", "FileController").except(["index"]);
+
+  Route.post("/user/:id/profile", "ProfileController.store");
 }).middleware(["auth"]);

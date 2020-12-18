@@ -26,7 +26,7 @@ class FileController {
     const file = request.file("file", {
       types: "image",
       size: "2mb",
-      extnames: ["png", "jpg"],
+      extnames: ["png", "jpg", "jpeg"],
     });
 
     const { clientName, type } = file;
@@ -74,7 +74,7 @@ class FileController {
     const file = request.file("file", {
       types: "image",
       size: "2mb",
-      extnames: ["png", "jpg"],
+      extnames: ["png", "jpg", "jpeg"],
     });
 
     const files = await File.findBy({ name: params.id });
