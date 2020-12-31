@@ -14,6 +14,23 @@ const File = use("App/Models/File");
 const fs = require("fs");
 
 class FileController {
+    /**
+   * Create/save a new file.
+   * POST files
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async index({request, response, params, auth}){
+    if (auth.user.id !== parseInt(params.user_id)) {
+      return response.status(401).json({
+        error: "Você não tempo permissão para realizar essa operação!",
+      });
+    }
+    const files = await File.query().where({user_id: auth.user.id}).fetch()
+    return files
+  }
   /**
    * Create/save a new file.
    * POST files
@@ -25,7 +42,7 @@ class FileController {
   async store({ request, response, auth }) {
     const file = request.file("file", {
       types: "image",
-      size: "2mb",
+      size: "5mb",
       extnames: ["png", "jpg", "jpeg"],
     });
 

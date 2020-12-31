@@ -6,7 +6,7 @@ class ProfileController {
   async store({ request, response, auth, params }) {
     const file = request.file("file", {
       types: "image",
-      size: "2mb",
+      size: "5mb",
       extnames: ["png", "jpg", "jpeg"],
     });
     if (auth.user.id !== parseInt(params.id)) {

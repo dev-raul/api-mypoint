@@ -27,6 +27,7 @@ Route.group(() => {
   Route.put("user/:id", "UserController.update");
   Route.get("user/", "UserController.show");
 
+  Route.get("user/:user_id/file", "FileController.index");
   Route.resource("file", "FileController").except(["index"]);
 
   Route.post("/user/:id/profile", "ProfileController.store");
