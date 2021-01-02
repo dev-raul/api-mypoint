@@ -2,6 +2,8 @@
 const User = use("App/Models/User");
 
 const Helpers = use("Helpers");
+const fs = require("fs");
+
 class ProfileController {
   async store({ request, response, auth, params }) {
     const file = request.file("file", {
@@ -28,7 +30,6 @@ class ProfileController {
     if (!file.moved()) {
       return file.error();
     }
-
     if (user.profile) {
       await fs.unlinkSync(Helpers.tmpPath(`uploads/${user.profile}`));
     }
@@ -38,6 +39,7 @@ class ProfileController {
 
     return response.status(201).json({ profile: name });
   }
+
 }
 
 module.exports = ProfileController;

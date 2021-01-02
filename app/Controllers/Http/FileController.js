@@ -76,6 +76,7 @@ class FileController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
+    console.log('entrou')
     response.download(Helpers.tmpPath(`uploads/${params.id}`));
   }
 

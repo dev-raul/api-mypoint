@@ -21,7 +21,6 @@ class User extends Model {
     });
     this.addHook("afterFind", async (user) => {
       delete user["password"];
-      console.log("user", user);
     });
   }
 
