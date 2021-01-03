@@ -89,9 +89,10 @@ class FileController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response, auth }) {
+    const size = "2mb"
     const file = request.file("file", {
       types: "image",
-      size: "2mb",
+      size,
       extnames: ["png", "jpg", "jpeg"],
     });
 

@@ -6,11 +6,13 @@ const fs = require("fs");
 
 class ProfileController {
   async store({ request, response, auth, params }) {
+    const size = "5mb"
     const file = request.file("file", {
       types: "image",
-      size: "5mb",
-      extnames: ["png", "jpg", "jpeg"],
+      size,
+      extnames: [ "jpg", "jpeg"],
     });
+
     if (auth.user.id !== parseInt(params.id)) {
       return response
         .status(401)
@@ -28,7 +30,7 @@ class ProfileController {
     });
 
     if (!file.moved()) {
-      return file.error();
+      return response.status(400).json({error: file.error().message});
     }
     if (user.profile) {
       await fs.unlinkSync(Helpers.tmpPath(`uploads/${user.profile}`));
